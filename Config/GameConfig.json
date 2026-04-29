@@ -1,0 +1,41 @@
+{
+  "gameSettings": {
+    "winningScore": 7,
+    "minWinDifference": 2,
+    "roundTimeLimit": 0
+  },
+  "physics": {
+    "gravity": 9.8,
+    "ballGravityScale": 2.5,
+    "ballMaxSpeed": 20,
+    "ballMinSpeed": 5
+  },
+  "bird": {
+    "movementSpeed": 5,
+    "jumpForce": 10,
+    "lowPassForce": 8,
+    "smashForce": 15
+  },
+  "ai": {
+    "easy": {
+      "reactionDelay": 0.5,
+      "predictionAccuracy": 0.5,
+      "movementSmoothing": 3
+    },
+    "medium": {
+      "reactionDelay": 0.3,
+      "predictionAccuracy": 0.7,
+      "movementSmoothing": 5
+    },
+    "hard": {
+      "reactionDelay": 0.15,
+      "predictionAccuracy": 0.9,
+      "movementSmoothing": 8
+    }
+  },
+  "court": {
+    "width": 16,
+    "height": 9,
+    "netHeight": 2
+  }
+}
