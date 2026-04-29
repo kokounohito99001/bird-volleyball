@@ -1,0 +1,7 @@
+{
+  "MoveLeft": [ "Left", "A" ],
+  "MoveRight": [ "Right", "D" ],
+  "Bump": [ "Space" ],
+  "Smash": [ "ShiftKey" ],
+  "ResetRound": [ "R" ]
+}
