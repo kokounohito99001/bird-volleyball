@@ -1,0 +1,13 @@
+{
+  "controls": {
+    "move_left": ["a", "ArrowLeft"],
+    "move_right": ["d", "ArrowRight"],
+    "low_pass": ["Space", "MouseLeft"],
+    "smash": ["Shift", "MouseRight"],
+    "reset_round": ["r"]
+  },
+  "sensitivity": {
+    "movement_speed": 300,
+    "jump_force": 400
+  }
+}

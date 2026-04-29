@@ -1,0 +1,63 @@
+```
+# Unity specific ignores
+Library/
+Temp/
+Obj/
+Build/
+Logs/
+*.unityproj
+*.sln
+*.csproj
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.meta
+*.prefab
+*.asset
+*.mat
+*.anim
+*.controller
+*.mask
+*.physicMaterial
+*.physicsMaterial2D
+*.flare
+*.cubemap
+*.prefs
+*.spriteatlas
+*.asmdef
+*.rsp
+*.asmref
+*.meta~*
+*.unity~*
+*.asset~*
+*.prefab~*
+
+# Build artifacts
+Build/
+Builds/
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment
+.env
+.env.local
+.env.*
+
+# Logs
+*.log
+crashlytics-build.properties
+
+# OS generated files
+*~
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Icon?
+```
