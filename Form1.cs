@@ -209,7 +209,23 @@ public partial class Form1 : Form
             TryJump(player);
         }
 
-        player.IsSmashing = pressedKeys.Contains(Keys.Space);
+        if (pressedKeys.Contains(Keys.Space))
+        {
+            if (!player.SmashTriggered && player.OnGround)
+            {
+                TryJump(player);
+                player.SmashTriggered = true;
+            }
+            else if (player.SmashTriggered && !player.OnGround && player.Velocity.Y >= 0)
+            {
+                player.IsSmashing = true;
+            }
+        }
+        else
+        {
+            player.SmashTriggered = false;
+            player.IsSmashing = false;
+        }
 
         if (controls.IsPressed(ControlAction.ResetRound, pressedKeys))
         {
