@@ -22,6 +22,8 @@ public sealed class Bird
 
     public bool IsSmashing { get; set; }
 
+    public bool SmashTriggered { get; set; }
+
     public float ActionCooldown { get; set; }
 
     public RectangleF Bounds => new(Position.X, Position.Y, Width, Height);
@@ -34,6 +36,7 @@ public sealed class Bird
         Velocity = PointF.Empty;
         OnGround = true;
         IsSmashing = false;
+        SmashTriggered = false;
         ActionCooldown = 0;
     }
 }

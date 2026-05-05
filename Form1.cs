@@ -34,8 +34,8 @@ public partial class Form1 : Form
     private const float ServeLaunchSpeedY = -360f;
     private const float AutoReturnHorizontalSpeed = 300f;
     private const float AutoReturnVerticalSpeed = -420f;
-    private const float AutoSmashHorizontalSpeed = 470f;
-    private const float AutoSmashVerticalSpeed = -120f;
+    private const float AutoSmashHorizontalSpeed = 580f;
+    private const float AutoSmashVerticalSpeed = -650f;
     private const int WinningScore = 7;
 
     private readonly System.Windows.Forms.Timer gameTimer;
@@ -62,6 +62,7 @@ public partial class Form1 : Form
     private GameMode gameMode = GameMode.SinglePlayer;
     private ScreenState screenState = ScreenState.MainMenu;
     private string bannerText = "Get Ready!";
+    private bool isBotControlledRightBird = true;
 
     public Form1()
     {
@@ -208,7 +209,23 @@ public partial class Form1 : Form
             TryJump(player);
         }
 
-        player.IsSmashing = pressedKeys.Contains(Keys.Space);
+        if (pressedKeys.Contains(Keys.Space))
+        {
+            if (!player.SmashTriggered && player.OnGround)
+            {
+                TryJump(player);
+                player.SmashTriggered = true;
+            }
+            else if (player.SmashTriggered && !player.OnGround && player.Velocity.Y >= 0)
+            {
+                player.IsSmashing = true;
+            }
+        }
+        else
+        {
+            player.SmashTriggered = false;
+            player.IsSmashing = false;
+        }
 
         if (controls.IsPressed(ControlAction.ResetRound, pressedKeys))
         {
@@ -229,11 +246,13 @@ public partial class Form1 : Form
             move += 1f;
         }
 
-        bot.Velocity = new PointF(move * BotMoveSpeed, bot.Velocity.Y);
+        var rightBirdSpeed = isBotControlledRightBird ? BotMoveSpeed : BirdMoveSpeed;
+        bot.Velocity = new PointF(move * rightBirdSpeed, bot.Velocity.Y);
 
+        var rightBirdJumpSpeed = isBotControlledRightBird ? -420f : BirdJumpSpeed;
         if (pressedKeys.Contains(Keys.Up))
         {
-            TryJump(bot);
+            TryJump(bot, rightBirdJumpSpeed);
         }
 
         bot.IsSmashing = pressedKeys.Contains(Keys.Return) || pressedKeys.Contains(Keys.Enter);
@@ -273,7 +292,8 @@ public partial class Form1 : Form
                 bot.IsSmashing = true;
                 if (bot.OnGround)
                 {
-                    bot.Velocity = new PointF(bot.Velocity.X, BirdJumpSpeed);
+                    var botJumpSpeed = isBotControlledRightBird ? -420f : BirdJumpSpeed;
+                    bot.Velocity = new PointF(bot.Velocity.X, botJumpSpeed);
                     bot.OnGround = false;
                 }
             }
@@ -506,14 +526,14 @@ public partial class Form1 : Form
         ball.Velocity = new PointF(pushLeft ? -Math.Abs(ball.Velocity.X) * 0.66f : Math.Abs(ball.Velocity.X) * 0.66f, ball.Velocity.Y * 0.92f);
     }
 
-    private void TryJump(Bird bird)
+    private void TryJump(Bird bird, float? jumpSpeed = null)
     {
         if (!bird.OnGround)
         {
             return;
         }
 
-        bird.Velocity = new PointF(bird.Velocity.X, BirdJumpSpeed);
+        bird.Velocity = new PointF(bird.Velocity.X, jumpSpeed ?? BirdJumpSpeed);
         bird.OnGround = false;
     }
 
@@ -648,12 +668,14 @@ public partial class Form1 : Form
 
             if (screenState == ScreenState.ModeSelect && SingleModeButtonBounds.Contains(e.Location))
             {
+                isBotControlledRightBird = true;
                 BeginGame(GameMode.SinglePlayer);
                 return;
             }
 
             if (screenState == ScreenState.ModeSelect && FriendModeButtonBounds.Contains(e.Location))
             {
+                isBotControlledRightBird = false;
                 BeginGame(GameMode.Versus);
                 return;
             }
@@ -738,7 +760,6 @@ public partial class Form1 : Form
         if (screenState == ScreenState.MainMenu)
         {
             DrawMenuButton(g, StartButtonBounds, "Начать игру", accentBrush, textBrush, buttonFont);
-            g.DrawString("Локальный аркадный волейбол про двух злых птичек", smallFont, textBrush, panelRect.X + 92, panelRect.Y + 132);
         }
         else
         {
