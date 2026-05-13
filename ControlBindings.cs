@@ -20,6 +20,7 @@ public sealed class ControlBindings
         this.bindings = bindings;
     }
 
+    // Загрузка настроек управления из JSON файла
     public static ControlBindings Load(string path)
     {
         if (!File.Exists(path))
@@ -43,11 +44,13 @@ public sealed class ControlBindings
         }
     }
 
+    // Проверка: нажата ли клавиша, назначенная на действие
     public bool IsPressed(ControlAction action, HashSet<Keys> pressedKeys)
     {
         return bindings.TryGetValue(action, out var keys) && keys.Overlaps(pressedKeys);
     }
 
+    // Создание привязок из конфигурации
     private static ControlBindings? FromConfig(ControlsFile? config)
     {
         if (config is null)
@@ -83,6 +86,7 @@ public sealed class ControlBindings
         return new ControlBindings(result);
     }
 
+    // Создание привязок по умолчанию
     private static ControlBindings CreateDefault()
     {
         return new ControlBindings(new Dictionary<ControlAction, HashSet<Keys>>
@@ -95,16 +99,13 @@ public sealed class ControlBindings
         });
     }
 
+    // Класс для десериализации JSON конфигурации
     private sealed class ControlsFile
     {
         public string[]? MoveLeft { get; set; }
-
         public string[]? MoveRight { get; set; }
-
         public string[]? Bump { get; set; }
-
         public string[]? Smash { get; set; }
-
         public string[]? ResetRound { get; set; }
     }
 }

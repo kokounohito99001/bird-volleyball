@@ -1,3 +1,5 @@
-```csharp
-
-```
+.vs/
+bin/
+obj/
+*.user
+*.suo

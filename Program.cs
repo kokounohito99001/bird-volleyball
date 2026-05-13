@@ -3,14 +3,15 @@ namespace BirdVolleyball;
 static class Program
 {
     /// <summary>
-    ///  The main entry point for the application.
+    /// Точка входа в приложение
     /// </summary>
     [STAThread]
     static void Main()
     {
-        // To customize application configuration such as set high DPI settings or default font,
-        // see https://aka.ms/applicationconfiguration.
+        // Инициализация конфигурации приложения (DPI, шрифты и т.д.)
         ApplicationConfiguration.Initialize();
+
+        // Запуск главной формы
         Application.Run(new Form1());
-    }    
+    }
 }

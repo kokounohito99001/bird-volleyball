@@ -2,6 +2,7 @@ namespace BirdVolleyball;
 
 public static class GraphicsExtensions
 {
+    // Отрисовка скруглённого прямоугольника
     public static void FillRoundedRectangle(this Graphics graphics, Brush brush, float x, float y, float width, float height, float radius)
     {
         using var path = new System.Drawing.Drawing2D.GraphicsPath();
